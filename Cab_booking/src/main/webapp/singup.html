@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #020432;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            width: 100%;
+            max-width: 350px;
+            background: #70768d;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+        h3 {
+            color: #333;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 5%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+        }
+        button {
+            width: 90%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        p {
+            margin-top: 15px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h3>Create Account</h3>
+        <input type="text" id="newUsername" placeholder="New Username">
+        <input type="password" id="newPassword" placeholder="New Password">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password">
+        <p class="error" id="errorMessage"></p>
+        <button onclick="createAccount()">Create Account</button>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+
+    <script> // Use appropriate API endpoint
+        
+                      //const API_URL = ;
+
+                    	  const API_URL = "http://localhost:8085/Cab_booking/login";
+
+                      function createAccount() {
+                          const username = document.getElementById("newUsername").value.trim();
+                          const password = document.getElementById("newPassword").value.trim();
+                          const confirmPassword = document.getElementById("confirmPassword").value.trim();
+                          const errorMessage = document.getElementById("errorMessage");
+
+                          // Clear previous errors
+                          errorMessage.textContent = "";
+
+                          // Input validation
+                          if (!username || !password || !confirmPassword) {
+                              errorMessage.textContent = "All fields are required.";
+                              return;
+                          }
+                          if (password.length < 6) {
+                              errorMessage.textContent = "Password must be at least 6 characters long.";
+                              return;
+                          }
+                          if (password !== confirmPassword) {
+                              errorMessage.textContent = "Passwords do not match.";
+                              return;
+                          }
+
+                          // Send request to backend
+                          fetch(API_URL, {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({ username, password })
+                          })
+                          .then(response => {
+                              if (!response.ok) {
+                                  throw new Error("Signup failed. Server error.");
+                              }
+                              return response.json();
+                          })
+                          .then(data => {
+                              alert("Account Created Successfully!");
+                              window.location.href = "index.html"; // Redirect after success
+                          })
+                          .catch(error => {
+                              console.error("Error creating account:", error);
+                              errorMessage.textContent = "Signup failed. Try again.";
+                          });
+                      }
+    </script>
+
+</body>
+</html>

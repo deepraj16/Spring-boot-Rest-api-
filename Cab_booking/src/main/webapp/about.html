@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Cab Booking Service</title>
+    <style>
+       body {
+        
+           
+            color: rgb(20, 18, 18);
+            display: flex;
+            justify-content: space-between;
+           
+            padding: 15px 50px;
+            background: rgba(0, 0, 0);
+            z-index: 10;
+            
+        }
+        
+
+
+        .navbar{
+            position: fixed;
+            top: 0;
+            width: 90%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: rgba(0, 0, 0);
+            z-index: 10;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FFD700;
+            text-decoration: none;
+        }
+
+        .navbar .menu a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .navbar .menu a:hover {
+            color: #dfe95b;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px 20px;
+            }
+
+            .navbar .menu {
+                margin-top: 10px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+
+        .container {
+            width: 80%;
+            margin-top: 30px;
+            margin: 40px auto;
+            background: #0d0b0b;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #5452dc;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+        }
+        .features {
+            list-style: none;
+            padding: 0;
+        }
+        .features li {
+            background: #252e4a;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background: hsl(235, 12%, 21%);
+            color: white;
+            border-radius: 0 0 8px 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" class="logo">🚖 CabBooking</a>
+        <div class="menu">
+            <a href="index.html">Home</a>
+            <a href="home.html">Book Cab</a>
+            <a href="about.html">About</a>
+            <a href="login.html">Login/logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>About Us</h1>
+        <h2>Reliable Rides, Anytime, Anywhere</h2>
+        <p>Welcome to <strong>Uber</strong>, your trusted partner for safe, comfortable, and affordable rides. Whether you need a quick trip across town, an airport transfer, or a long-distance journey, we are here to make your travel smooth and stress-free.</p>
+
+        <h2>Who We Are</h2>
+        <p>At <strong>uder</strong>, we are committed to providing top-quality transportation services with professional drivers, well-maintained vehicles, and competitive pricing. Our goal is to ensure every ride is convenient, reliable, and enjoyable.</p>
+
+        <h2>Why Choose Us?</h2>
+        <ul class="features">
+            <li>🚖 24/7 Availability – Book a ride anytime, anywhere.</li>
+            <li>👨‍✈️ Professional Drivers – Trained, licensed, and courteous.</li>
+            <li>💰 Affordable Rates – Transparent pricing with no hidden fees.</li>
+            <li>📱 Easy Booking – Simple online and app-based booking system.</li>
+        </ul>
+
+        <h2>Our Mission</h2>
+        <p>We strive to make transportation effortless by offering a seamless booking experience and ensuring our passengers reach their destinations safely and on time.</p>
+
+        <div class="footer">
+            <p>Book your ride with us today and experience the difference! 🚖</p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cab Payment 🚖</title>
+    <script>
+        function getQueryParam(param) {
+            let urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function generateRandomCabId() {
+            return Math.floor(1000 + Math.random() * 9000); // Random 4-digit ID
+        }
+
+        function startTimer(duration, display) {
+            let timer = duration, minutes, seconds;
+            let interval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    alert("⏳ Time expired! Please try again.");
+                    location.reload();
+                }
+            }, 1000);
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            let cabId = getQueryParam("cabId") || generateRandomCabId();
+            // let driverName = getQueryParam("driver") || "ram";
+            // let route = getQueryParam("route") || "Not specified";
+            
+             document.getElementById("cabId").textContent = cabId;
+            // document.getElementById("driverName").textContent = driverName;
+            // document.getElementById("route").textContent = route;
+            
+            let timerDisplay = document.getElementById("timer");
+            startTimer(300, timerDisplay); // 5-minute timer
+        });
+
+        function processPayment() {
+            let cabId = document.getElementById("cabId").textContent;
+            // let driverName = document.getElementById("driverName").textContent;
+            // let route = document.getElementById("route").textContent;
+            let passengers = document.getElementById("passengerCount").value;
+            let paymentMethod = document.getElementById("paymentMethod").value;
+
+            if (passengers <= 0) {
+                alert("🚫 Please enter a valid number of passengers.");
+                return;
+            }
+            
+            alert("✅ Payment successful for Cab ID: " + cabId +  "\nPassengers: " + passengers + "\nPayment Method: " + paymentMethod);
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+            background-color: #04071a;
+        }
+        .navbar{
+            position: fixed;
+            top: 0;
+            width: 90%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: rgba(0, 0, 0);
+            z-index: 10;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FFD700;
+            text-decoration: none;
+        }
+
+        .navbar .menu a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .navbar .menu a:hover {
+            color: #dfe95b;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px 20px;
+            }
+
+            .navbar .menu {
+                margin-top: 10px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+        .payment-box {
+            border: 1px solid #0f0303;
+            padding: 20px;
+            border-radius: 5px;
+            color: #218838;
+            width: 350px;
+            margin: auto;
+            background-color: #091959;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        input, select {
+            padding: 8px;
+            width: 90%;
+            margin: 10px 0;
+            display: block;
+            text-align: center;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #timer {
+            font-size: 18px;
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        h2{
+            color:#218838
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" class="logo">🚖 CabBooking</a>
+        <div class="menu">
+            <a href="index.html">Home</a>
+            <a href="home.html">Book Cab</a>
+            <a href="about.html">About</a>
+            <a href="login.html">Login/logout</a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <h2>Cab Payment 🚖</h2>
+    <div class="payment-box">
+        <p><strong>Cab ID:</strong> <span id="cabId"></span></p>
+        <!-- <p><strong>Driver Name:</strong> <span id="driverName"></span> 🧑‍✈️</p> -->
+        <!-- <p><strong>Route:</strong> <span id="route"></span> 📍</p> -->
+        <p><strong>Time Remaining:</strong> <span id="timer"></span> ⏳</p>
+        <input type="number" id="passengerCount" placeholder="Enter number of passengers" min="1">
+        <select id="paymentMethod">
+            <option value="Credit Card">💳 Credit Card</option>
+            <option value="Debit Card">💳 Debit Card</option>
+            <option value="UPI">📲 UPI</option>
+            <option value="Cash">💵 Cash</option>
+        </select>
+        <button onclick="processPayment()">💰 Proceed to Pay</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #020432;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            width: 100%;
+            max-width: 350px;
+            background: #cdd1d6;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+        h3 {
+            color: #333;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        p {
+            margin-top: 15px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h3>Login</h3>
+        <input type="text" id="loginUsername" placeholder="Username">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <p class="error" id="errorMessage"></p>
+        <button onclick="login()">Login</button>
+        <p>Create account? <a href="singup.html">Signup</a></p>
+    </div>
+
+    <script>
+    const API_URL = "http://localhost:8085/Cab_booking/login"; // Ensure this URL is correct
+
+    function login() {
+        const username = document.getElementById("loginUsername").value.trim();
+        const password = document.getElementById("loginPassword").value.trim();
+        const errorMessage = document.getElementById("errorMessage");
+
+        // Clear previous errors
+        errorMessage.textContent = "";
+
+        if (!username || !password) {
+            errorMessage.textContent = "Please enter both username and password.";
+            return;
+        }
+
+        // Send login request to the servlet
+        fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams({
+                username: username,
+                password: password
+            })
+        })
+        .then(response => response.json()) // Parse JSON response
+        .then(data => {
+            if (data.error) {
+                errorMessage.textContent = data.error; // Show error if login fails
+            } else {
+                alert("Login Successful!");
+                window.location.href = "index.html"; // Redirect on success
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            errorMessage.textContent = "Failed to connect to server.";
+        });
+    }
+    </script>
+
+</body>
+</html>
