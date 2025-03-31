@@ -1,0 +1,23 @@
+<hibernate-configuration xmlns="http://www.hibernate.org/xsd/orm/cfg">
+    <session-factory>
+        <!-- MySQL JDBC Driver -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        
+        <!-- Database Connection -->
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/movie?useSSL=false</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">1234</property>
+
+        <!-- Hibernate Dialect for MySQL -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Automatically update database schema -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Show SQL Queries in Console -->
+        <property name="hibernate.show_sql">true</property>
+
+        <mapping class="com.example.Student"/>
+       
+    </session-factory>
+</hibernate-configuration>
