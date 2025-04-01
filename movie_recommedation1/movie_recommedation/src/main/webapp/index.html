@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Booking System</title>
+    <style>
+        /* General Styling */
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #17161f; 
+            color: white; 
+            text-align: center;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #333;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+        .navbar .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #FFD700;
+            text-decoration: none;
+        }
+        .navbar .menu a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .navbar .menu a:hover {
+            color: #FFD700;
+        }
+
+        /* Movie Gallery */
+        .container {
+            margin-top: 80px;
+            padding: 20px;
+        }
+        .movie-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+        .movie-card {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+        .movie-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="#" class="logo">🎬 MovieBooking</a>
+        <div class="menu">
+            <a href="index.html">Home</a>
+            <a href="search.html">Movies</a>
+            <a href="about.jsp">About</a>
+            <a href="login.jsp">Login</a>
+        </div>
+    </div>
+
+    <!-- Movie Posters Section -->
+    <div class="container">
+
+        <div class="movie-list" id="movie-list"></div>
+    </div>
+
+    <script>
+        const movies = [
+        	"RRR","Inception", "The Dark Knight", "Interstellar", "Titanic", "Avatar",
+            "The Matrix", "Forrest Gump", "Pulp Fiction", "The Shawshank Redemption",
+            "Gladiator", "The Godfather", "Avengers: Endgame", "Joker", "Spider-Man","iron man"
+            ,
+        ];
+
+        function getRandomMovies(count = 13) {
+            let randomMovies = [];
+            while (randomMovies.length < count) {
+                let randomMovie = movies[Math.floor(Math.random() * movies.length)];
+                if (!randomMovies.includes(randomMovie)) {
+                    randomMovies.push(randomMovie);
+                }
+            }
+            return movies;
+        }
+
+        function fetchMovies() {
+            const apiKey = "b9686597";  // Replace with your OMDb API key
+            const movieListDiv = document.getElementById("movie-list");
+            movieListDiv.innerHTML = ""; // Clear existing content
+
+            getRandomMovies().forEach(movie => {
+                fetch(`https://www.omdbapi.com/?t=${movie}&apikey=${apiKey}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.Response === "True") {
+                            movieListDiv.innerHTML += `
+                                <div class="movie-card">
+                                    <img src="${data.Poster}" alt="${data.Title}">
+                                </div>
+                            `;
+                        }
+                    })
+                    .catch(error => console.error("Error fetching data:", error));
+            });
+        }
+
+        window.onload = fetchMovies; // Load random movie posters on page load
+    </script>
+
+</body>
+</html>

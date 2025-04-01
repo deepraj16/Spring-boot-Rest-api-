@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("http://localhost:8085/movie_recommedation/movie")
+                .then(response => response.json())
+                .then(data => {
+                    window.movieData = data;
+                    displayMovies(data);
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        });
+
+        function displayMovies(data) {
+            let container = document.getElementById("movieContainer");
+            container.innerHTML = "";
+        
+            data.forEach(movie => {
+                let movieBox = `<div class="movie-box">
+                    <p><strong>Title:</strong> ${movie.title}</p>
+                    <p><strong>Genre:</strong> ${movie.genre}</p>
+                    <p><strong>Price:</strong> $${movie.price}</p>
+                    <p><strong>Booking Date:</strong> ${movie.booking_date}</p>
+                    <p><strong>Booking Time:</strong> ${movie.booking_time}</p>
+                    <button onclick="bookMovie(${movie.id})">Book Now</button>
+                </div>`;
+                container.innerHTML += movieBox;
+            });
+        }
+
+        function searchMovies() {
+            let searchValue = document.getElementById("searchInput").value.toLowerCase();
+            let filteredMovies = window.movieData.filter(movie => movie.title.toLowerCase().includes(searchValue));
+            displayMovies(filteredMovies);
+        }
+
+        function bookMovie(movieId) {
+            alert("Proceeding to booking for Movie ID: " + movieId);
+            window.location.href = "booking.jsp";
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #17161f; 
+            
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: #333;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FFD700;
+            text-decoration: none;
+        }
+        .navbar .menu a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .navbar .menu a:hover {
+            color: #FFD700;
+        }
+        h2 {
+            margin-top: 100px;
+            color: #333;
+            font-size: 32px;
+        }
+        input {
+            padding: 10px;
+            width: 60%;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .movie-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 80%;
+        }
+        .movie-box {
+            border: 1px solid #ccc;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 250px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .movie-box:hover {
+            transform: scale(1.05);
+        }
+        button {
+            padding: 10px 15px;
+            margin-top: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" class="logo">🎬 MovieBooking</a>
+        <div class="menu">
+            <a href="index.html">Home</a>
+            <a href="search.html">Search Movies</a>
+            <a href="about.jsp">About</a>
+            <a href="login.jsp">Login/Logout</a>
+        </div>
+    </div>
+
+    <h2>Movie Search Engine</h2>
+    <input type="text" id="searchInput" placeholder="Search by title" onkeyup="searchMovies()">
+    <div id="movieContainer" class="movie-container"></div>
+</body>
+</html>
